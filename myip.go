@@ -44,11 +44,13 @@ func responseCallback(ipaddress *net.IP, err *error) func(res stun.Event) {
 	return func(res stun.Event) {
 		if res.Error != nil {
 			*err = fmt.Errorf("failed STUN transaction: %w", res.Error)
+			return
 		}
 
 		var xorAddr stun.XORMappedAddress
 		if getError := xorAddr.GetFrom(res.Message); getError != nil {
 			*err = fmt.Errorf("failed to get XOR-MAPPED-ADDRESS: %w", getError)
+			return
 		}
 
 		log.Printf("got IP address: %s", xorAddr.IP)
