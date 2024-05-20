@@ -9,22 +9,22 @@ import (
 )
 
 func DiscoverIP(server string) (net.IP, error) {
-	// parse a STUN URI
+	log.Printf("parse STUN URI: %s", server)
 	uri, err := stun.ParseURI(server)
 	if err != nil {
 		return nil, fmt.Errorf("invalid URI '%s': %w", server, err)
 	}
 
-	// creating a "connection" to STUN server
+	log.Println("initialize client for STUN server")
 	client, err := stun.DialURI(uri, &stun.DialConfig{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to dial: %w", err)
 	}
 
-	// building binding request with random transaction id
+	log.Println("building binding request with random transaction id")
 	message := stun.MustBuild(stun.TransactionID, stun.BindingRequest)
 
-	// sending request to STUN server, waiting for response message
+	log.Println("sending request to STUN server, waiting for response message")
 	ipaddress := net.IP{}
 	var responseError error
 	if err = client.Do(message, responseCallback(&ipaddress, &responseError)); err != nil {
