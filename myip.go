@@ -8,6 +8,7 @@ import (
 	"github.com/pion/stun/v2"
 )
 
+// DiscoverIP returns the public IP address discovered.
 func DiscoverIP(server string) (net.IP, error) {
 	log.Printf("parse STUN URI: %s", server)
 	uri, err := stun.ParseURI(server)
