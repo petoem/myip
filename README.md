@@ -2,6 +2,12 @@
 
 Tool to discover your public IP address
 
+## Install
+
+```console
+go install github.com/petoem/myip/cmd/myip@latest
+```
+
 ## Usage
 
 ```console
