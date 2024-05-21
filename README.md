@@ -1,6 +1,6 @@
 # myip
 
-Tool to discover your public IP address
+Tool to discover your public IP address with STUN (Session Traversal Utilities for NAT)
 
 ## Install
 
