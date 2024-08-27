@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	v6 := flag.Bool("v6", false, "discover IPv6 address")
 	newline := flag.Bool("n", false, "print newline after IP address")
 	stun := flag.String("stun", "", "server to use for discovery (e.g. stun:your.server.host:3478)")
 	version := flag.Bool("version", false, "display version information")
@@ -35,7 +36,7 @@ func main() {
 		*stun = servers[rand.Intn(len(servers))]
 	}
 
-	if ipaddress, err := myip.DiscoverIP(*stun); err != nil {
+	if ipaddress, err := myip.DiscoverIP(*stun, *v6); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	} else {

@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strconv"
 
 	"github.com/pion/stun/v2"
 )
 
 // DiscoverIP returns the public IP address discovered.
-func DiscoverIP(server string) (net.IP, error) {
+func DiscoverIP(server string, v6 bool) (net.IP, error) {
 	log.Printf("parse STUN URI: %s", server)
 	uri, err := stun.ParseURI(server)
 	if err != nil {
@@ -17,7 +18,12 @@ func DiscoverIP(server string) (net.IP, error) {
 	}
 
 	log.Println("initialize client for STUN server")
-	client, err := stun.DialURI(uri, &stun.DialConfig{})
+	network := "udp4"
+	address := net.JoinHostPort(uri.Host, strconv.Itoa(uri.Port))
+	if v6 {
+		network = "udp6"
+	}
+	client, err := stun.Dial(network, address)
 	if err != nil {
 		return nil, fmt.Errorf("failed to dial: %w", err)
 	}
