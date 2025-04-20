@@ -13,9 +13,13 @@ go install github.com/petoem/myip/cmd/myip@latest
 ```console
 > myip --help
 Usage of myip:
-  -n    print newline after IP address
+  -list-stun-servers
+        list baked in public stun server
+  -n    print newline after the output
   -stun string
         server to use for discovery (e.g. stun:your.server.host:3478)
+  -v6
+        discover IPv6 address
   -verbose
         verbose output
   -version
